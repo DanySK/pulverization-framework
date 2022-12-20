@@ -1,6 +1,5 @@
 package example.units
 
-import example.components.DeviceSensors
 import example.components.LocalizationSensor
 import example.components.config
 import example.components.mySensorsLogic
@@ -11,13 +10,10 @@ import it.nicolasfarabegoli.pulverization.runtime.dsl.PulverizationPlatformScope
 import it.nicolasfarabegoli.pulverization.runtime.dsl.pulverizationPlatform
 import kotlinx.coroutines.runBlocking
 
-/**
- * State-Behaviour entrypoint.
- */
 fun main() = runBlocking {
-    val platform = pulverizationPlatform<Any, Any, DeviceSensors, Any, Unit>(config.getDeviceConfiguration("gps")!!) {
+    val platform = pulverizationPlatform(config.getDeviceConfiguration("gps")!!) {
         sensorsLogic(LocalizationSensor(), ::mySensorsLogic)
-        withPlatform { RabbitmqCommunicator(hostname = "rabbitmq") }
+        withPlatform { RabbitmqCommunicator() }
         withRemotePlace { defaultRabbitMQRemotePlace() }
     }
     val jobs = platform.start()
