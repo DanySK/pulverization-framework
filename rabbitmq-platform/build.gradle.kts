@@ -20,6 +20,11 @@ kotlin {
                 implementation(rootProject.libs.kotlinx.coroutines.reactor)
             }
         }
+        nativeMain {
+            dependencies {
+                implementation("com.autodesk:coroutineworker:0.8.3")
+            }
+        }
     }
 
     fun KotlinNativeTarget.librabbitmqCInterop(target: String) {
