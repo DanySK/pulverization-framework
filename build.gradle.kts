@@ -245,7 +245,7 @@ koverMerged {
     }
     filters {
         projects {
-            excludes += listOf(":"/*, ":examples:example-03"*/)
+            excludes += listOf(":", ":examples:example-03")
         }
     }
 }
