@@ -1,6 +1,7 @@
 import org.gradle.configurationcache.extensions.capitalized
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTargetWithHostTests
+import org.jetbrains.kotlin.util.capitalizeDecapitalize.toLowerCaseAsciiOnly
 
 kotlin {
     sourceSets {
@@ -51,7 +52,12 @@ kotlin {
         )
     }
 
-    linuxX64(setupNative)
-    macosX64(setupNative)
-    mingwX64(setupNative)
+    when (val hostOs = System.getProperty("os.name").trim().toLowerCaseAsciiOnly()) {
+        "linux" -> linuxX64(setupNative)
+        "mac os x" -> macosX64(setupNative)
+        "windows", "windows server 2022" -> mingwX64(setupNative)
+        else -> throw GradleException(
+            "Host OS '$hostOs' is not supported in Kotlin/Native.",
+        )
+    }
 }

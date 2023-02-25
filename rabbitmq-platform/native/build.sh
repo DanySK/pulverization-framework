@@ -5,11 +5,13 @@ set -e
 cd rabbitmq-c
 
 if [ "$TARGET" == "mingw" ]; then
-  CONF_OPTS="-fPIC --host=x86_64-w64-mingw32"
+  CONF_OPTS="-fPIC"
 elif [ "$TARGET" == "linux" ]; then
   CONF_OPTS="-fPIC"
 elif [ "$TARGET" == "darwin" ]; then
-  CONF_OPTS="--host=x86_64-w64-darwin"
+  export OPENSSL_ROOT_DIR=/usr/local/opt/openssl
+  export OPENSSL_LIBRARIES=/usr/local/opt/openssl/lib
+  CONF_OPTS=""
 else
   echo "Unknown TARGET=$TARGET"
   exit 1
@@ -17,7 +19,7 @@ fi
 
 if [ -d build ]; then rm -Rf build; fi
 mkdir -p build && cd build
-cmake -DCMAKE_C_FLAGS=$CONF_OPTS ..
+cmake -DCMAKE_C_FLAGS="$CONF_OPTS" ..
 cmake --build . --config Release
 
 cd ../..
