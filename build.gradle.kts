@@ -116,8 +116,9 @@ allprojects {
 
         js(IR) {
             browser()
-            nodejs()
-            binaries.library()
+            // nodejs()
+            // binaries.library()
+            useCommonJs()
         }
 
         val nativeSetup: KotlinNativeTarget.() -> Unit = {
