@@ -30,6 +30,7 @@ kotlin {
 
 ktlint {
     filter {
+        exclude("**/js/**")
         exclude {
             it.file.relativeTo(projectDir).startsWith(project.buildDir.relativeTo(projectDir))
         }

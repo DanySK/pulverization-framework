@@ -1,17 +1,17 @@
 package it.nicolasfarabegoli.pulverization.platforms.rabbitmq
 
-import Channel
-import Connection
-import Replies.AssertQueue
-import buffer.global.Buffer
-import connect
 import it.nicolasfarabegoli.pulverization.core.show
+import it.nicolasfarabegoli.pulverization.platforms.rabbitmq.js.Channel
+import it.nicolasfarabegoli.pulverization.platforms.rabbitmq.js.Connection
+import it.nicolasfarabegoli.pulverization.platforms.rabbitmq.js.Replies.AssertQueue
+import it.nicolasfarabegoli.pulverization.platforms.rabbitmq.js.connect
 import it.nicolasfarabegoli.pulverization.runtime.communication.Binding
 import it.nicolasfarabegoli.pulverization.runtime.communication.Communicator
 import it.nicolasfarabegoli.pulverization.runtime.communication.RemotePlace
 import kotlinx.coroutines.await
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
+import it.nicolasfarabegoli.pulverization.platforms.rabbitmq.js.Options.AssertQueue as AQ
 
 /**
  * Implement the [Communicator] interface relying on RabbitMQ as a platform for communications.
@@ -39,7 +39,7 @@ actual class RabbitmqCommunicator actual constructor(
 
     companion object {
         private const val EXCHANGE = "pulverization.exchange"
-        private val QUEUE_OPTIONS = object : Options.AssertQueue {
+        private val QUEUE_OPTIONS = object : AQ {
             override var durable: Boolean? = true
         }
     }
@@ -72,7 +72,7 @@ actual class RabbitmqCommunicator actual constructor(
     }
 
     override suspend fun fireMessage(message: ByteArray) {
-        sendChannel.publish(EXCHANGE, sendRoutingKey, Buffer.from(message))
+        sendChannel.publish(EXCHANGE, sendRoutingKey, message)
     }
 
     override fun receiveMessage(): Flow<ByteArray> = callbackFlow {
