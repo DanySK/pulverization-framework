@@ -117,7 +117,7 @@ allprojects {
         js(IR) {
             browser()
             // nodejs()
-            // binaries.library()
+            binaries.library()
             useCommonJs()
         }
 

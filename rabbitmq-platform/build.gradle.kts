@@ -22,7 +22,9 @@ kotlin {
         jsMain {
             dependencies {
                 implementation(npm("amqplib", "0.10.3"))
-                implementation(npm("@types/amqplib", "0.10.1"))
+                implementation(npm("querystring", "0.2.1"))
+                implementation(npm("buffer", "6.0.3"))
+                // implementation(npm("@types/amqplib", "0.10.1"))
             }
         }
     }
@@ -50,9 +52,9 @@ tasks {
             it.file.relativeTo(projectDir).startsWith(project.buildDir.relativeTo(projectDir))
         }
     }
-    jsGenerateExternalsIntegrated {
-        dependsOn(dokkaHtml)
-        dependsOn(detekt)
-        dependsOn(runKtlintCheckOverJsMainSourceSet)
-    }
+//    jsGenerateExternalsIntegrated {
+//        dependsOn(dokkaHtml)
+//        dependsOn(detekt)
+//        dependsOn(runKtlintCheckOverJsMainSourceSet)
+//    }
 }
