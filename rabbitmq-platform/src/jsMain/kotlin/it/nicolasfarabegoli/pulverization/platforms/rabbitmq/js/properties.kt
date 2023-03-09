@@ -13,6 +13,8 @@
     "UndocumentedPublicClass",
     "UndocumentedPublicFunction",
 )
+@file:JsModule("amqplib")
+@file:JsNonModule
 
 package it.nicolasfarabegoli.pulverization.platforms.rabbitmq.js
 
